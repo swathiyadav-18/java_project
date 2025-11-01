@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'Maven3' // Name of Maven installation in Jenkins
-        jdk 'Java11'   // Name of JDK installation in Jenkins
+        jdk 'JDK11'   // Name of JDK installation in Jenkins
     }
     stages {
         stage('Checkout') {
