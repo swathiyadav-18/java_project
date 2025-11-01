@@ -1,39 +1,26 @@
 pipeline {
     agent any
-
     tools {
-        jdk 'JDK11'     // Make sure Jenkins has a JDK installation named 'JDK17'
+        maven 'Maven3' // Name of Maven installation in Jenkins
+        jdk 'Java11'   // Name of JDK installation in Jenkins
     }
-
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-
-        stage('Compile') {
+        stage('Build') {
             steps {
-                echo 'Compiling Java program...'
-                bat '''
-                    mkdir -p target
-                    javac -d target src/main/java/org/springframework/samples/petclinic/PetClinicApplication.java
-                '''
+                echo 'Building the project with Maven...'
+                bat 'mvn clean install'
             }
         }
-
         stage('Run') {
             steps {
-                echo 'Running Java program...'
-                bat 'java -cp target com.example.App'
+                echo 'Running the Spring Boot app...'
+                bat 'mvn spring-boot:run'
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline finished.'
         }
     }
 }
-
