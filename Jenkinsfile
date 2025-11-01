@@ -15,7 +15,7 @@ pipeline {
         stage('Compile') {
             steps {
                 echo 'Compiling Java program...'
-                sh '''
+                bat '''
                     mkdir -p target
                     javac -d target src/main/java/com/example/App.java
                 '''
@@ -25,7 +25,7 @@ pipeline {
         stage('Run') {
             steps {
                 echo 'Running Java program...'
-                sh 'java -cp target com.example.App'
+                bat 'java -cp target com.example.App'
             }
         }
     }
