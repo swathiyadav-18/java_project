@@ -1,27 +1,41 @@
 pipeline {
     agent any
-    tools {
-        maven 'Maven3' // Name of Maven installation in Jenkins
-        jdk 'JDK11'   // Name of JDK installation in Jenkins
-    }
+
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Build') {
             steps {
-                echo 'Building the project with Maven...'
-                bat 'mvn clean install'
+                echo 'Building project...'
+                // your build commands here, e.g., mvn clean package
             }
         }
-        stage('Run') {
-            steps {
-                echo 'Running the Spring Boot app...'
-                bat 'mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=9090'
 
+        stage('Deploy') {
+            steps {
+                echo 'Preparing deploy folder...'
+
+                // Step 1: create deploy folder safely
+                bat '''
+                if not exist deploy (
+                    mkdir deploy
+                )
+                '''
+
+                echo 'Deploy folder ready!'
+
+                // Step 2: copy build artifacts to deploy folder
+                bat 'copy target\\*.jar deploy\\'
+
+                echo 'Artifacts copied to deploy folder.'
+
+                // Optional: Step 3 - deploy to server or archive
+                // e.g., archiveArtifacts artifacts: 'deploy/', fingerprint: true
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
         }
     }
 }
