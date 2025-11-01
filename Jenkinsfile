@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JDK17'     // Make sure Jenkins has a JDK installation named 'JDK17'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,29 +12,20 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Compile') {
             steps {
-                echo 'Building the project...'
-                // Example for a Node.js project:
-                // sh 'npm install'
-                // sh 'npm run build'
+                echo 'Compiling Java program...'
+                sh '''
+                    mkdir -p target
+                    javac -d target src/main/java/com/example/App.java
+                '''
             }
         }
 
-        stage('Test') {
+        stage('Run') {
             steps {
-                echo 'Running tests...'
-                // sh 'npm test'
-            }
-        }
-
-        stage('Deploy') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo 'Deploying application...'
-                // sh './deploy.sh'
+                echo 'Running Java program...'
+                sh 'java -cp target com.example.App'
             }
         }
     }
@@ -41,3 +36,4 @@ pipeline {
         }
     }
 }
+
