@@ -19,7 +19,8 @@ pipeline {
         stage('Run') {
             steps {
                 echo 'Running the Spring Boot app...'
-                bat 'mvn spring-boot:run'
+                bat 'mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=9090'
+
             }
         }
     }
