@@ -17,7 +17,7 @@ pipeline {
                 echo 'Compiling Java program...'
                 bat '''
                     mkdir -p target
-                    javac -d target src/main/java/com/example/App.java
+                    javac -d target src/main/java/org/springframework/samples/petclinic/PetClinicApplication.java
                 '''
             }
         }
