@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK17'     // Make sure Jenkins has a JDK installation named 'JDK17'
+        jdk 'JDK11'     // Make sure Jenkins has a JDK installation named 'JDK17'
     }
 
     stages {
